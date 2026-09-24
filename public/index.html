@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meethink — Strategic Advisors in Life Sciences Events & Engagement Technology</title>
+  <title>Brightside Company — Strategic Advisors in Life Sciences Events & Engagement Technology</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&family=Edu+SA+Beginner:wght@500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&family=Edu+SA+Beginner:wght@500&family=EB+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -47,7 +47,8 @@
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.94); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color 0.3s, box-shadow 0.3s; }
     nav.scrolled { border-color: var(--border); box-shadow: 0 2px 24px rgba(15,13,41,0.07); }
     .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 48px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { font-size: 22px; font-weight: 900; color: var(--ink); text-decoration: none; letter-spacing: -0.04em; }
+    .nav-logo { font-size: 19px; font-weight: 900; color: var(--ink); text-decoration: none; letter-spacing: -0.04em; line-height: 1.02; }
+    .nav-logo span, .footer-logo span { display: block; }
     .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
     .nav-links a { font-size: 14px; font-weight: 600; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
     .nav-links a:hover { color: var(--ink); }
@@ -69,107 +70,86 @@
     .postit-label { position: absolute; inset: 18% 10% 10% 10%; display: flex; align-items: center; justify-content: center; font-family: var(--postit-font); font-size: 15px; font-weight: 500; color: var(--ink); text-align: center; line-height: 1.3; pointer-events: none; }
 
     #hero { padding-top: 68px; min-height: 100vh; display: flex; align-items: center; background: var(--white); position: relative; overflow: hidden; }
-    .hero-inner { display: grid; grid-template-columns: 55fr 45fr; gap: 64px; align-items: center; width: 100%; padding: 60px 0; }
+    .hero-inner { display: grid; grid-template-columns: 55fr 45fr; grid-template-areas: "head notes" "copy notes"; gap: 0 64px; align-items: center; width: 100%; padding: 60px 0; }
+    .hero-head { grid-area: head; }
+    .hero-copy { grid-area: copy; }
+    .hero-notes { grid-area: notes; align-self: center; }
     .hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; display: block; }
     .hero-h1 { font-size: clamp(36px, 4vw, 58px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: var(--ink); margin-bottom: 32px; }
     .hero-body { font-size: 17px; line-height: 1.75; color: var(--text-mid); max-width: 520px; margin-bottom: 40px; }
     .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-    .hero-postits-img { width: 100%; display: block; }
+    .hero-postits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; justify-items: center; }
+    .hero-postit { width: 100%; max-width: 200px; aspect-ratio: 1; }
+    .hero-postit:nth-child(1) { transform: rotate(-1.5deg); }
+    .hero-postit:nth-child(2) { transform: rotate(1.5deg); }
+    .hero-postit:nth-child(3) { transform: rotate(1deg); }
+    .hero-postit:nth-child(4) { transform: rotate(-1deg); }
+    .hero-postit .postit-label { font-size: 30px; inset: 12% 7% 7% 7%; }
 
     /* ABOUT */
     #about { padding: var(--pad) 0; background: var(--bg); }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 48px; }
-    .team-card { background: var(--white); border-radius: var(--rad); border: 1.5px solid var(--border); overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+    .team-card { background: var(--white); border: 1.5px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--rad); padding: 24px 26px 26px; transition: box-shadow 0.2s, transform 0.2s; }
     .team-card:hover { box-shadow: 0 10px 40px rgba(15,13,41,0.09); transform: translateY(-3px); }
-    .team-photo-wrap { display: flex; justify-content: center; padding: 36px 0 0; }
-    .team-photo { width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 3px solid var(--white); box-shadow: 0 4px 20px rgba(15,13,41,0.12); background: var(--bg); }
+    .team-card.tc-blue { --accent: #6DD1FF; }
+    .team-card.tc-teal { --accent: #16AF9A; }
+    .team-head { display: flex; align-items: center; gap: 16px; }
+    .team-photo { width: 66px; height: 66px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 3px solid color-mix(in srgb, var(--accent) 45%, var(--white)); box-shadow: 0 3px 12px rgba(15,13,41,0.12); background: var(--white); }
     .team-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .team-namebar { margin: 20px 28px 0; padding: 12px 16px; border-left: 4px solid var(--ink); background: linear-gradient(to right, rgba(109,209,255,0.85), rgba(109,209,255,0)); border-radius: 0 6px 6px 0; }
-    .team-name { font-size: 16px; font-weight: 800; color: var(--ink); }
-    .team-role { font-size: 12px; font-weight: 600; color: var(--ink); margin-top: 2px; }
-    .team-body { padding: 20px 28px 32px; }
-    .team-bio { font-size: 14px; line-height: 1.7; color: var(--text-mid); margin-bottom: 16px; }
-    .team-highlights { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-    .team-highlights li { font-size: 13px; color: var(--text-mid); line-height: 1.5; padding-left: 16px; position: relative; }
-    .team-highlights li::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+    .team-identity { min-width: 0; }
+    .team-name { font-size: 19px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; line-height: 1.25; }
+    .team-role { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-dark); margin-top: 3px; }
+    .team-link { display: inline-flex; align-items: center; gap: 7px; margin-left: auto; flex-shrink: 0; font-size: 13px; font-weight: 700; color: var(--teal-dark); text-decoration: none; transition: color 0.2s; }
+    .team-link svg { width: 17px; height: 17px; }
+    .team-link:hover { color: var(--ink); text-decoration: underline; }
+    .team-lead { font-size: 14px; line-height: 1.65; color: var(--text-mid); margin-top: 18px; }
 
     /* ADVISORS */
-    #advisors { padding: var(--pad) 0; background: var(--white); }
-    .advisors-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .advisors-left h2 { margin-bottom: 24px; }
-    .advisors-body { font-size: 16px; line-height: 1.8; color: var(--text-mid); }
-    .advisors-body p + p { margin-top: 16px; }
-
-    /* CHALLENGE */
-    #problem { padding: var(--pad) 0; background: var(--bg); }
-    .challenge-header { margin-bottom: 48px; }
-    .challenge-header h2 { max-width: 740px; }
-
-    .challenge-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0 64px;
+    #advisors { padding: var(--pad) 0; background: var(--ink); position: relative; overflow: hidden; }
+    #advisors::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 132px 132px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 40%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 40%, transparent 100%);
     }
-    .challenge-item {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 24px;
-      align-items: center;
-      padding: 32px 0;
-      border-top: 1px solid var(--border);
-    }
-    .challenge-item:nth-child(1),
-    .challenge-item:nth-child(2) { border-top: none; padding-top: 0; }
-    .challenge-item.reverse { grid-template-columns: 1fr 160px; }
-    .challenge-postit { width: 160px; height: 160px; flex-shrink: 0; transform: rotate(1deg); }
-    .challenge-postit .postit-label { font-size: 18px; }
-    .challenge-body { font-size: 14px; line-height: 1.75; color: var(--text-mid); }
-
-    @media (max-width: 960px) {
-      .challenge-grid { grid-template-columns: 1fr; gap: 0; }
-      .challenge-item:nth-child(2) { border-top: 1px solid var(--border); padding-top: 32px; }
-      .challenge-item.reverse { grid-template-columns: 160px 1fr; direction: ltr; }
-      .challenge-item.reverse .challenge-postit { order: -1; }
-      .challenge-item.reverse .challenge-body { order: 1; }
-    }
+    .advisors-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    #advisors .eyebrow { color: #8FC2DE; }
+    .advisors-left h2 { color: var(--white); margin-bottom: 24px; }
+    .story-accent { display: block; margin-top: 6px; font-family: 'EB Garamond', Georgia, serif; font-style: italic; font-weight: 400; letter-spacing: -0.01em; color: #A8D0E6; }
+    .advisors-body { font-size: 17px; line-height: 1.95; color: rgba(255,255,255,0.68); }
+    .advisors-body p + p { margin-top: 24px; }
+    .story-keywords { position: relative; z-index: 1; margin-top: 64px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.12); }
+    .story-keywords-label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 22px; }
+    .keyword-list { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; }
+    .keyword-list li { font-size: 15px; font-weight: 600; color: var(--white); padding: 10px 22px; border: 1px solid #8FC2DE; border-radius: 999px; background: rgba(143,194,222,0.1); }
 
     /* SERVICES */
     #services { padding: var(--pad) 0; background: var(--white); }
-    .services-list { display: flex; flex-direction: column; }
-    .service-item { display: grid; grid-template-columns: 260px 1fr; border-top: 1px solid var(--border); transition: background 0.2s; }
-    .service-item:last-child { border-bottom: 1px solid var(--border); }
+    .services-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+    .service-item { border-bottom: 1px solid var(--border); border-left: 4px solid transparent; transition: border-color 0.2s, background 0.2s; }
     .service-item:hover { background: #fafcfe; }
-    .service-accent { padding: 32px 32px 32px 0; border-right: 1px solid var(--border); display: flex; align-items: flex-start; }
-    .service-accent-bar {
-      width: 100%; padding: 14px 20px;
-      border-left: 4px solid var(--ink);
-      border-radius: 0 4px 4px 0;
-    }
-    .service-accent-bar h3 { font-size: 15px; font-weight: 800; color: var(--ink); line-height: 1.35; }
-    .service-body { padding: 32px 0 32px 40px; }
-    .service-tagline { display: block; font-size: 14px; font-weight: 600; color: var(--teal); margin-bottom: 16px; line-height: 1.4; }
-    .service-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
-    .service-bullets li { font-size: 14px; color: var(--text-mid); line-height: 1.55; padding-left: 16px; position: relative; }
-    .service-bullets li::before { content: ''; position: absolute; left: 0; top: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--teal); }
-    .service-body > p { font-size: 14px; line-height: 1.75; color: var(--text-mid); margin-bottom: 20px; }
-    /* Each card's gradient: color left → transparent right */
-    .svc-blue   { background: linear-gradient(to right, rgba(109,209,255,0.85), rgba(109,209,255,0)); }
-    .svc-yellow { background: linear-gradient(to right, rgba(255,226,111,0.9),  rgba(255,226,111,0)); }
-    .svc-green  { background: linear-gradient(to right, rgba(85,225,99,0.8),    rgba(85,225,99,0));   }
-    .svc-purple { background: linear-gradient(to right, rgba(231,202,253,0.95), rgba(231,202,253,0)); }
-    .svc-grad   { background: linear-gradient(to right, #B2ECFF, rgba(255,226,111,0.6), rgba(255,226,111,0)); }
-
-    /* HOW */
-    #how { padding: var(--pad) 0; background: var(--bg); border-top: 1px solid var(--border); }
-    .how-inner { display: grid; grid-template-columns: 380px 1fr; gap: 80px; align-items: start; }
-    .how-left h2 { margin-bottom: 20px; }
-    .how-left p { font-size: 15px; line-height: 1.75; color: var(--text-mid); margin-bottom: 24px; }
-    .engagement-list { display: flex; flex-direction: column; gap: 12px; }
-    .engagement-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--rad); padding: 22px 28px; display: flex; align-items: center; gap: 18px; transition: border-color 0.2s, box-shadow 0.2s; }
-    .engagement-card:hover { border-color: var(--teal); box-shadow: 0 4px 18px rgba(70,156,166,0.1); }
-    .eng-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-    .eng-name { font-size: 17px; font-weight: 800; color: var(--ink); }
-    .eng-desc { font-size: 13px; color: var(--text-mid); line-height: 1.55; margin-top: 4px; }
+    .service-item[open] { border-left-color: var(--accent); background: linear-gradient(to right, color-mix(in srgb, var(--accent) 18%, transparent), transparent 420px); }
+    .service-summary { display: grid; grid-template-columns: 1fr 24px; align-items: center; gap: 20px; padding: 26px 24px 26px 22px; cursor: pointer; list-style: none; }
+    .service-summary::-webkit-details-marker { display: none; }
+    .service-summary:focus-visible { outline: 2px solid var(--teal); outline-offset: -4px; }
+    .service-label { display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); opacity: 0.5; margin-bottom: 7px; }
+    .service-summary h3 { font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1.3; letter-spacing: -0.01em; }
+    .service-tagline { display: block; font-size: 14px; font-weight: 600; color: var(--teal); margin-top: 7px; line-height: 1.5; max-width: 620px; }
+    .service-chevron { width: 22px; height: 22px; color: var(--text-light); transition: transform 0.25s ease, color 0.2s; justify-self: end; }
+    .service-item[open] .service-chevron { transform: rotate(180deg); color: var(--ink); }
+    .service-panel { padding: 0 24px 30px 22px; animation: svc-open 0.3s ease; }
+    @keyframes svc-open { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+    .service-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .service-bullets li { font-size: 14px; color: var(--text-mid); line-height: 1.6; padding-left: 20px; position: relative; }
+    .service-bullets li::before { content: ''; position: absolute; left: 0; top: 10px; width: 10px; height: 2px; border-radius: 1px; background: var(--accent); }
+    /* Accent colour per service */
+    .svc-blue   { --accent: #6DD1FF; }
+    .svc-yellow { --accent: #F2C94C; }
+    .svc-green  { --accent: #55E163; }
+    .svc-purple { --accent: #C79BF0; }
+    .svc-grad   { --accent: #16AF9A; }
 
     /* CONTACT */
     #contact { padding: var(--pad) 0; background: var(--ink); text-align: center; position: relative; overflow: hidden; }
@@ -183,27 +163,30 @@
     /* FOOTER */
     footer { background: #07061e; padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.05); }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; }
-    .footer-logo { font-size: 17px; font-weight: 900; color: var(--white); text-decoration: none; letter-spacing: -0.04em; }
+    .footer-logo { font-size: 16px; font-weight: 900; color: var(--white); text-decoration: none; letter-spacing: -0.04em; line-height: 1.05; }
     .footer-copy { font-size: 13px; color: rgba(255,255,255,0.22); }
 
-    /* Hero post-it visibility */
-    .hero-postits-mobile { display: none; margin: 24px 0; }
-    .hero-postits-desktop { display: block; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; transition-delay: 0s !important; }
+      .js-loaded .fade-up { opacity: 1; transform: none; }
+    }
 
     /* RESPONSIVE */
     @media (max-width: 960px) {
       :root { --pad: 72px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 0; }
-      .hero-postits-desktop { display: none; }
-      .hero-postits-mobile { display: block; }
-      .about-grid, .advisors-inner, .how-inner { grid-template-columns: 1fr; gap: 48px; }
-      .service-item { grid-template-columns: 1fr; }
-      .service-accent { border-right: none; padding: 28px 0 0; }
-      .service-body { padding: 16px 0 28px; }
+      .hero-inner { grid-template-columns: 1fr; grid-template-areas: "head" "notes" "copy"; gap: 0; }
+      .hero-postits { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 32px 0 36px; }
+      .hero-postit { max-width: none; }
+      .hero-postit .postit-label { font-size: clamp(10px, 3.3vw, 19px); inset: 10% 6% 6% 6%; line-height: 1.25; }
+      .about-grid, .advisors-inner { grid-template-columns: 1fr; gap: 48px; }
       .nav-links li:not(:last-child) { display: none; }
     }
     @media (max-width: 600px) {
       .container, .nav-inner { padding-left: 20px; padding-right: 20px; }
+      .hero-postits { gap: 8px; }
+      .team-head { flex-wrap: wrap; }
+      .team-link { margin-left: 0; width: 100%; }
     }
   </style>
 </head>
@@ -211,11 +194,11 @@
 
   <nav id="nav">
     <div class="nav-inner">
-      <a href="#hero" class="nav-logo">meethink</a>
+      <a href="#hero" class="nav-logo"><span>brightside</span><span>company</span></a>
       <ul class="nav-links">
-        <li><a href="#about">About Us</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="#contact" class="nav-cta">Get in Touch</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="mailto:jenna@jesapp.com" class="nav-cta">Get in Touch</a></li>
       </ul>
     </div>
   </nav>
@@ -224,274 +207,216 @@
   <section id="hero">
     <div class="container">
       <div class="hero-inner">
-        <div class="fade-up">
+        <div class="hero-head fade-up">
           <span class="hero-eyebrow">Life Sciences Events &amp; Engagement Technology</span>
           <h1 class="hero-h1">Are you ready to untangle your events operations?</h1>
-          <!-- Mobile only: post-its appear here between h1 and body -->
-          <div class="hero-postits-mobile">
-            <img src="postitHeroImage.png" alt="Key challenges in pharma event management" class="hero-postits-img" />
-          </div>
-          <p class="hero-body">If your life sciences events are running on a mix of manual workarounds, regional systems, and inherited processes — you're not alone. We help global pharmaceutical organisations cut through the complexity and build something that actually works.</p>
+        </div>
+        <div class="hero-copy fade-up" style="transition-delay:0.1s">
+          <p class="hero-body">If your life sciences events are running on a mix of manual workarounds, regional systems, and inherited processes — you're not alone. We help global pharmaceutical organisations cut through the complexity and design something that actually works.</p>
           <div class="hero-actions">
-            <a href="#contact" class="btn btn-teal">
+            <a href="mailto:jenna@jesapp.com" class="btn btn-teal">
               Get in Touch
-              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
             <a href="#services" class="btn btn-outline">Our Services</a>
           </div>
         </div>
-        <!-- Desktop only: post-its on the right -->
-        <div class="hero-postits-desktop fade-up" style="transition-delay:0.15s">
-          <img src="postitHeroImageWide.png" alt="Key challenges in pharma event management" class="hero-postits-img" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2. ABOUT -->
-  <section id="about">
-    <div class="container">
-      <div class="section-header fade-up">
-        <span class="eyebrow">About us</span>
-        <h2>A team with decades of the right experience.</h2>
-      </div>
-      <div class="about-grid fade-up" style="transition-delay:0.1s">
-        <div class="team-card">
-          <div class="team-photo-wrap">
-            <div class="team-photo"><img src="jenna.png" alt="Jenna Sherlock-Goudet" /></div>
+        <!-- Post-its: the four things we untangle -->
+        <div class="hero-notes hero-postits fade-up" style="transition-delay:0.15s">
+          <div class="hero-postit postit-wrap">
+            <img src="postitYellow.png" alt="" />
+            <span class="postit-label">High manual effort</span>
           </div>
-          <div class="team-namebar">
-            <div class="team-name">Jenna Sherlock-Goudet</div>
-            <div class="team-role">Co-Founder</div>
+          <div class="hero-postit postit-wrap">
+            <img src="postitOrange.png" alt="" />
+            <span class="postit-label">Lack of visibility &amp; insights</span>
           </div>
-          <div class="team-body">
-            <p class="team-bio">6 years as Customer Relationship &amp; Experience Manager at a Top 10 pharmaceutical organisation, followed by 6 years as Commercial Strategy Director for CRM Events Management at Veeva Systems.</p>
-            <ul class="team-highlights">
-              <li>Supported the majority of Top 20 pharma organisations in Veeva Events Management deployments</li>
-              <li>Deep expertise in global HCP engagement processes, compliance, and large-scale operational transformation</li>
-              <li>Extensive knowledge of industry best practices across global and local markets</li>
-            </ul>
+          <div class="hero-postit postit-wrap">
+            <img src="postitBlue.png" alt="" />
+            <span class="postit-label">Legacy processes</span>
           </div>
-        </div>
-        <div class="team-card">
-          <div class="team-photo-wrap">
-            <div class="team-photo"><img src="erik.png" alt="Erik Dozsa" /></div>
-          </div>
-          <div class="team-namebar">
-            <div class="team-name">Erik Dozsa</div>
-            <div class="team-role">Co-Founder</div>
-          </div>
-          <div class="team-body">
-            <p class="team-bio">10+ years at Veeva Systems as a CRM &amp; Events Management Implementation Architect and Senior Product Manager, specialising in large-scale global deployments.</p>
-            <ul class="team-highlights">
-              <li>Led Veeva CRM global Events Management implementations for Top 20 pharmaceutical organisations</li>
-              <li>Specialises in event &amp; campaign technologies, workflow automation, and cross-platform integration</li>
-              <li>Rare combination of deep technical expertise and product strategy experience</li>
-            </ul>
+          <div class="hero-postit postit-wrap">
+            <img src="postitPurple.png" alt="" />
+            <span class="postit-label">Complex tech ecosystems</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 3. STRATEGIC ADVISORS -->
+  <!-- 2. OUR STORY -->
   <section id="advisors">
     <div class="container">
       <div class="advisors-inner">
         <div class="advisors-left fade-up">
           <span class="eyebrow">Our story</span>
-          <h2>Deep expertise in life sciences events business &amp; technology.</h2>
+          <h2>Deep expertise in life sciences<span class="story-accent">events and engagement technology.</span></h2>
         </div>
         <div class="fade-up" style="transition-delay:0.1s">
           <div class="advisors-body">
-            <p>We founded Meethink because we kept seeing the same problems across organisations: processes that had grown too complex, technology that wasn't delivering, and teams spending enormous effort on work that should be streamlined. We built our careers solving exactly these problems — and now we do it independently, without the constraints of a vendor relationship.</p>
-            <p>Our experience runs deep in field and strategic events, and we'll always give you a clear view of the full picture. We stay close to the latest technological advancements — and bring them to the table when they matter.</p>
+            <p>We founded Brightside Company after years working at the intersection of pharmaceutical events, CRM technology, and operational transformation. We saw the same challenges arise again and again: processes that had become unnecessarily complex, technology that wasn't delivering on its promise, and valuable time lost to workflows that should be simpler.</p>
+            <p>We've spent years on the inside, building systems, transforming operations, and advising the industry. We know where the friction comes from and, more importantly, how to fix it.</p>
           </div>
         </div>
+      </div>
+      <div class="story-keywords fade-up" style="transition-delay:0.2s">
+        <span class="story-keywords-label">Frequent Problem Areas</span>
+        <ul class="keyword-list">
+          <li>Collaboration</li>
+          <li>Compliance</li>
+          <li>Cross-border</li>
+          <li>Integrations</li>
+          <li>Visibility</li>
+          <li>User Experience</li>
+          <li>Contracting</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- 4. CHALLENGE -->
-  <section id="problem">
-    <div class="container">
-      <div class="challenge-header fade-up">
-        <span class="eyebrow">The challenge</span>
-        <h2>Life sciences events are complex — and no single tool was built to handle all of them.</h2>
-      </div>
-      <div class="challenge-grid">
-
-        <div class="challenge-item fade-up">
-          <div class="challenge-postit postit-wrap">
-            <img src="postitYellow.png" alt="" />
-            <span class="postit-label">Friction in Cross Functional Collaboration</span>
-          </div>
-          <p class="challenge-body">Strategic events cut across medical, commercial, compliance, and finance teams. Without a shared coordination layer, each handoff creates risk — duplicated effort, missed approvals, and accountability gaps.</p>
-        </div>
-
-        <div class="challenge-item fade-up">
-          <div class="challenge-postit postit-wrap">
-            <img src="postitOrange.png" alt="" />
-            <span class="postit-label">Technology that doesn't quite fit</span>
-          </div>
-          <p class="challenge-body">Standard platforms are configured for field events at scale. Adapting them to strategic events requires expertise that vendor implementation teams rarely bring.</p>
-        </div>
-
-        <div class="challenge-item reverse fade-up">
-          <p class="challenge-body">Compliance rules are country-specific, platform-specific, and constantly evolving. Without the right processes and tooling, organisations are exposed — often without knowing it.</p>
-          <div class="challenge-postit postit-wrap">
-            <img src="postitBlue.png" alt="" />
-            <span class="postit-label">Compliance Risk in Workflows</span>
-          </div>
-        </div>
-
-        <div class="challenge-item reverse fade-up">
-          <p class="challenge-body">CRM infrastructure is regional by design. Strategic events aren't. The result is fragmented data, manual handoffs, and events that fall through the cracks.</p>
-          <div class="challenge-postit postit-wrap">
-            <img src="postitPurple.png" alt="" />
-            <span class="postit-label">Gaps in Cross-border Coordination</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. SERVICES -->
+  <!-- 3. SERVICES -->
   <section id="services">
     <div class="container">
       <div class="section-header fade-up">
-        <span class="eyebrow">What we do</span>
-        <h2>Services designed to move things forward.</h2>
+        <span class="eyebrow">How we help</span>
+        <h2>Real expertise for better events.</h2>
         <p>We work across the full lifecycle of pharmaceutical event operations — from process design to technology implementation to AI-powered modernisation.</p>
       </div>
       <div class="services-list fade-up" style="transition-delay:0.1s">
-        <div class="service-item">
-          <div class="service-accent">
-            <div class="service-accent-bar svc-blue">
+        <details class="service-item svc-blue">
+          <summary class="service-summary">
+            <div>
+              <span class="service-label">Simplify</span>
               <h3>Events Process &amp; Workflow Optimisation</h3>
+              <span class="service-tagline">Understand how your events really work today, and build a simpler way forward.</span>
             </div>
-          </div>
-          <div class="service-body">
-            <span class="service-tagline">Get clarity on how your events actually run — and how they should.</span>
+            <svg class="service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="service-panel">
             <ul class="service-bullets">
-              <li>Map current processes against industry best practices</li>
-              <li>Identify inefficiencies, compliance risks, and bottlenecks</li>
-              <li>Redesign workflows to reduce friction and improve consistency</li>
-              <li>Define governance models and cross-functional roles</li>
-              <li>Deliver clear "As Is / To Be" documentation</li>
+              <li>Eliminate unnecessary steps, duplication and manual work</li>
+              <li>Turn complex processes into clear, streamlined workflows</li>
+              <li>Create consistency across teams, markets and event types</li>
+              <li>Build processes that can adapt as your organisation evolves</li>
             </ul>
           </div>
-        </div>
-        <div class="service-item">
-          <div class="service-accent">
-            <div class="service-accent-bar svc-yellow">
+        </details>
+        <details class="service-item svc-yellow">
+          <summary class="service-summary">
+            <div>
+              <span class="service-label">Optimise</span>
               <h3>Technology Evaluation &amp; Ecosystem Optimisation</h3>
+              <span class="service-tagline">Make sure your tech stack is working for you, not against you.</span>
             </div>
-          </div>
-          <div class="service-body">
-            <span class="service-tagline">Make sure your tech stack is working for you, not against you.</span>
+            <svg class="service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="service-panel">
             <ul class="service-bullets">
-              <li>Evaluate platforms against actual business needs</li>
-              <li>Identify configuration gaps, integration issues, usability friction</li>
-              <li>Vendor-neutral recommendations — not a sales pitch</li>
-              <li>Hands-on experience with Veeva and Salesforce ecosystems</li>
-              <li>Support tool selection and long-term technology strategy</li>
+              <li>Understand what's working, what isn't, and why</li>
+              <li>Remove unnecessary tools, workarounds and complexity</li>
+              <li>Connect your systems around the way your teams actually work</li>
+              <li>Build a technology ecosystem that can evolve with your needs</li>
             </ul>
           </div>
-        </div>
-        <div class="service-item">
-          <div class="service-accent">
-            <div class="service-accent-bar svc-green">
+        </details>
+        <details class="service-item svc-green">
+          <summary class="service-summary">
+            <div>
+              <span class="service-label">Implement</span>
               <h3>Implementation Facilitation &amp; Advisory</h3>
+              <span class="service-tagline">Take the pressure out of technology implementations &amp; upgrades.</span>
             </div>
-          </div>
-          <div class="service-body">
-            <span class="service-tagline">The difference between a good implementation and a failed one is often who's in the room.</span>
+            <svg class="service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="service-panel">
             <ul class="service-bullets">
-              <li>Hands-on support through implementations and upgrades</li>
-              <li>Stakeholder alignment and requirements definition</li>
-              <li>Workshop design and decision-making facilitation</li>
-              <li>UAT support and adoption monitoring</li>
-              <li>Bridge the gap between vendor promises and operational reality</li>
+              <li>Keep implementations grounded in operational reality</li>
+              <li>Bridge the gap between your teams and technology vendors</li>
+              <li>Make better decisions before problems become expensive</li>
+              <li>Keep projects moving, aligned and focussed on the outcome</li>
             </ul>
           </div>
-        </div>
-        <div class="service-item">
-          <div class="service-accent">
-            <div class="service-accent-bar svc-purple">
+        </details>
+        <details class="service-item svc-purple">
+          <summary class="service-summary">
+            <div>
+              <span class="service-label">Design</span>
               <h3>Workflow &amp; Experience Design</h3>
+              <span class="service-tagline">Build workflows that are compliant, intuitive and a pleasure to use.</span>
             </div>
-          </div>
-          <div class="service-body">
-            <span class="service-tagline">Most consultants tell you what to build. We show you.</span>
+            <svg class="service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="service-panel">
             <ul class="service-bullets">
-              <li>End-to-end workflow design for event coordinators and global teams</li>
-              <li>Screen-level UX recommendations for existing or new systems</li>
-              <li>Simplified data entry flows that reduce error and improve compliance</li>
-              <li>Audit-ready workflow structures</li>
-              <li>Output isn't a deck — it's something you can implement</li>
+              <li>Design end-to-end workflows around real user needs</li>
+              <li>Reduce clicks, handoffs and manual data entry</li>
+              <li>Make complex processes easier to understand and follow</li>
+              <li>Deliver experiences that are both compliant and genuinely usable</li>
             </ul>
           </div>
-        </div>
-        <div class="service-item">
-          <div class="service-accent">
-            <div class="service-accent-bar svc-grad">
+        </details>
+        <details class="service-item svc-grad">
+          <summary class="service-summary">
+            <div>
+              <span class="service-label">Modernise</span>
               <h3>AI-Powered Process Modernisation</h3>
+              <span class="service-tagline">Use AI to take the effort out of repetitive, high-stakes work.</span>
             </div>
-          </div>
-          <div class="service-body">
-            <span class="service-tagline">We don't just advise on AI — we use it ourselves, every day.</span>
-            <p>A lot of consultants are talking about AI. We're actually using it — in our own workflows and in the work we do for clients. We build practical AI-powered solutions around the repetitive, high-stakes work that pharmaceutical event management generates: documents, invoices, compliance checks, spend reconciliation. Not theoretical frameworks. Real tools, grounded in how your teams actually work.</p>
+            <svg class="service-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="service-panel">
             <ul class="service-bullets">
-              <li>Intelligent document processing — contracts, invoices, consent forms</li>
-              <li>AI-assisted compliance guidance tailored to your business rules</li>
-              <li>Automation of spend tracking and reconciliation workflows</li>
-              <li>Grounded in your actual processes, not generic use cases</li>
+              <li>Automate repetitive tasks without compromising control</li>
+              <li>Reduce the manual effort behind documents, invoices and compliance</li>
+              <li>Turn existing processes into smarter, AI-enabled workflows</li>
+              <li>Apply AI where it delivers measurable operational value</li>
             </ul>
           </div>
-        </div>
+        </details>
       </div>
     </div>
   </section>
 
-  <!-- 6. HOW WE WORK -->
-  <section id="how">
+  <!-- 4. ABOUT -->
+  <section id="about">
     <div class="container">
-      <div class="how-inner">
-        <div class="how-left fade-up">
-          <span class="eyebrow">How we work</span>
-          <h2>Flexible engagements. Tangible outputs.</h2>
-          <p>Every engagement is scoped to your situation. We work the way that makes most sense for the problem at hand.</p>
+      <div class="section-header fade-up">
+        <span class="eyebrow">About us</span>
+        <h2>A unique combination of pharma industry and technology expertise.</h2>
+      </div>
+      <div class="about-grid fade-up" style="transition-delay:0.1s">
+        <div class="team-card tc-blue">
+          <div class="team-head">
+            <div class="team-photo"><img src="jenna.png" alt="Jenna Sherlock-Goudet" /></div>
+            <div class="team-identity">
+              <div class="team-name">Jenna Sherlock-Goudet</div>
+              <div class="team-role">Co-Founder</div>
+            </div>
+            <a class="team-link" href="https://www.linkedin.com/in/jenna-sherlock-goudet-90707189/" target="_blank" rel="noopener noreferrer" aria-label="Jenna Sherlock-Goudet on LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.4 0h4.37v1.92h.06c.61-1.1 2.1-2.26 4.32-2.26 4.62 0 5.47 2.96 5.47 6.8V22h-4.56v-6.62c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.54 1.71-2.54 3.49V22H7.62V8z"/></svg>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+          <p class="team-lead">Deep expertise in global HCP events &amp; engagement processes, and industry best practices.</p>
         </div>
-        <div class="engagement-list fade-up" style="transition-delay:0.12s">
-          <div class="engagement-card">
-            <div class="eng-dot" style="background:var(--blue);"></div>
-            <div>
-              <div class="eng-name">Fixed Project</div>
-              <div class="eng-desc">Defined scope, clear deliverables, agreed timeline. Best when the problem is well understood.</div>
+        <div class="team-card tc-teal">
+          <div class="team-head">
+            <div class="team-photo"><img src="erik.png" alt="Erik Dozsa" /></div>
+            <div class="team-identity">
+              <div class="team-name">Erik Dozsa</div>
+              <div class="team-role">Co-Founder</div>
             </div>
+            <a class="team-link" href="https://www.linkedin.com/in/erik-dozsa/" target="_blank" rel="noopener noreferrer" aria-label="Erik Dozsa on LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zm7.4 0h4.37v1.92h.06c.61-1.1 2.1-2.26 4.32-2.26 4.62 0 5.47 2.96 5.47 6.8V22h-4.56v-6.62c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.54 1.71-2.54 3.49V22H7.62V8z"/></svg>
+              <span>LinkedIn</span>
+            </a>
           </div>
-          <div class="engagement-card">
-            <div class="eng-dot" style="background:var(--green);"></div>
-            <div>
-              <div class="eng-name">Monthly Retainer</div>
-              <div class="eng-desc">Ongoing access to strategic thinking throughout a programme or initiative.</div>
-            </div>
-          </div>
-          <div class="engagement-card">
-            <div class="eng-dot" style="background:var(--purple);"></div>
-            <div>
-              <div class="eng-name">Day Rate</div>
-              <div class="eng-desc">For workshops, focused reviews, or ad-hoc advisory where a fixed project isn't the right fit.</div>
-            </div>
-          </div>
+          <p class="team-lead">Specialises in pharmaceutical technology strategy and ecosystems, integrations, implementation and UX.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 7. CONTACT -->
+  <!-- 5. CONTACT -->
   <section id="contact">
     <div class="container">
       <div class="contact-inner fade-up">
@@ -501,7 +426,6 @@
         <div class="contact-actions">
           <a href="mailto:jenna@jesapp.com" class="btn-white">
             Get in Touch
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
         </div>
       </div>
@@ -512,8 +436,8 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <a href="#hero" class="footer-logo">meethink</a>
-        <span class="footer-copy">© 2026 Meethink. All rights reserved.</span>
+        <a href="#hero" class="footer-logo"><span>brightside</span><span>company</span></a>
+        <span class="footer-copy">© 2026 Brightside Company. All rights reserved.</span>
       </div>
     </div>
   </footer>

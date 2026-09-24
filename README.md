@@ -1,4 +1,4 @@
-# Meethink website
+# Brightside Company website
 
 Static site for [meethinkteam.com](https://meethinkteam.com).
 
