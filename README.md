@@ -1,6 +1,6 @@
 # Brightside Company website
 
-Static site for [meethinkteam.com](https://meethinkteam.com).
+Static site for Brightside Company.
 
 - Site files live in `public/` (`index.html` + images). Only this folder is published.
 - Hosted as a Cloudflare Worker with static assets (`wrangler.jsonc`).
