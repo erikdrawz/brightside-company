@@ -81,32 +81,51 @@
     .btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; border-radius: 6px; font-family: var(--font); font-size: 15px; font-weight: 700; text-decoration: none; cursor: pointer; border: none; transition: background 0.2s, transform 0.2s; }
     .btn-teal { background: linear-gradient(90deg, #0B80B4, #16AF9A); color: var(--white); box-shadow: 0 4px 16px rgba(11,128,180,0.3); }
     .btn-teal:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(11,128,180,0.35); }
-    .btn-outline { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+    .btn-outline { background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
     .btn-outline:hover { background: var(--ink); color: var(--white); transform: translateY(-2px); }
     .btn-white { background: var(--white); color: var(--ink); padding: 15px 32px; border-radius: 6px; font-family: var(--font); font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: background 0.2s, transform 0.2s; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
     .btn-white:hover { background: #f0f0f0; transform: translateY(-2px); }
 
-    /* POST-IT */
-    .postit-wrap { position: relative; display: inline-block; }
-    .postit-wrap img { display: block; width: 100%; height: 100%; }
-    .postit-label { position: absolute; inset: 18% 10% 10% 10%; display: flex; align-items: center; justify-content: center; font-family: var(--postit-font); font-size: 15px; font-weight: 500; color: var(--ink); text-align: center; line-height: 1.3; pointer-events: none; }
+    /* HERO: notes wall (desktop) / scattered cluster (mobile) */
+    #hero { position: relative; overflow: hidden; background: var(--white); }
+    #hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(15,13,41,0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(15,13,41,0.05) 1px, transparent 1px);
+      background-size: 88px 88px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 30%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 30%, transparent 100%);
+    }
+    .hero-stage { position: relative; max-width: 1440px; min-height: 100vh; margin: 0 auto; padding: 68px 48px 0; display: flex; align-items: center; justify-content: center; }
+    .hero-text { width: 100%; max-width: 760px; padding: 56px 0 88px; text-align: center; }
+    .hero-head, .hero-copy { position: relative; z-index: 2; }
+    .hero-eyebrow { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-light); margin-bottom: 26px; }
+    .hero-h1 { font-size: clamp(48px, 5.9vw, 76px); font-weight: 900; letter-spacing: -0.04em; line-height: 0.98; color: var(--ink); margin-bottom: 28px; text-wrap: balance; }
+    .hero-accent { background: linear-gradient(90deg, #0B80B4, #16AF9A); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-body { font-size: 18px; line-height: 1.7; color: var(--text-mid); max-width: 600px; margin: 0 auto 36px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; justify-content: center; }
 
-    #hero { padding-top: 68px; min-height: 100vh; display: flex; align-items: center; background: var(--white); position: relative; overflow: hidden; }
-    .hero-inner { display: grid; grid-template-columns: 55fr 45fr; grid-template-areas: "head notes" "copy notes"; gap: 0 64px; align-items: center; width: 100%; padding: 60px 0; }
-    .hero-head { grid-area: head; }
-    .hero-copy { grid-area: copy; }
-    .hero-notes { grid-area: notes; align-self: center; }
-    .hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-light); margin-bottom: 20px; display: block; }
-    .hero-h1 { font-size: clamp(36px, 4vw, 58px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; color: var(--ink); margin-bottom: 32px; }
-    .hero-body { font-size: 17px; line-height: 1.75; color: var(--text-mid); max-width: 520px; margin-bottom: 40px; }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-    .hero-postits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; justify-items: center; }
-    .hero-postit { width: 100%; max-width: 200px; aspect-ratio: 1; }
-    .hero-postit:nth-child(1) { transform: rotate(-1.5deg); }
-    .hero-postit:nth-child(2) { transform: rotate(1.5deg); }
-    .hero-postit:nth-child(3) { transform: rotate(1deg); }
-    .hero-postit:nth-child(4) { transform: rotate(-1deg); }
-    .hero-postit .postit-label { font-size: 30px; inset: 12% 7% 7% 7%; }
+    /* Post-its: pure CSS, darker band across the top 15% */
+    .hero-notes { position: absolute; inset: 0; z-index: 1; list-style: none; pointer-events: none; }
+    .hero-note {
+      --k: 1;
+      position: absolute; box-sizing: border-box;
+      width: calc(var(--size) * var(--k)); height: calc(var(--size) * var(--k));
+      padding: calc(30px * var(--k));
+      background: linear-gradient(var(--band) 0 15%, var(--paper) 15%);
+      box-shadow: 0 22px 36px -14px rgba(15,13,41,0.4);
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      font-family: var(--postit-font); font-weight: 500; font-size: calc(36px * var(--k)); line-height: 1.15; color: var(--ink);
+      transform: rotate(var(--r));
+      animation: bob 5s ease-in-out infinite;
+    }
+    @keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--r)); } 50% { transform: translateY(-6px) rotate(var(--r)); } }
+    .note-yellow { --band: #F5CF3A; --paper: #FFE26F; --size: 260px; --r: -9deg; left: -30px; top: 150px; }
+    .note-orange { --band: #FF9A66; --paper: #FFAA80; --size: 280px; --r: 7deg;  right: -20px; top: 110px; animation-delay: -1.5s; }
+    .note-blue   { --band: #4CC3FF; --paper: #6DD1FF; --size: 240px; --r: 5deg;  left: 60px; bottom: -60px; animation-delay: -3s;
+                   align-items: flex-start; padding-top: calc(50px * var(--k)); }
+    .note-purple { --band: #D9B3F7; --paper: #E7CAFD; --size: 270px; --r: -5deg; right: 70px; bottom: -70px; animation-delay: -4.5s;
+                   align-items: flex-start; padding-top: calc(52px * var(--k)); }
 
     /* ABOUT */
     #about { padding: var(--pad) 0; background: var(--bg); }
@@ -235,15 +254,40 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; transition-delay: 0s !important; }
       .js-loaded .fade-up { opacity: 1; transform: none; }
+      .hero-note { animation: none; }
     }
 
     /* RESPONSIVE */
+    @media (max-width: 1200px) and (min-width: 961px) {
+      .hero-note { --k: 0.8; }
+      .hero-text { max-width: 640px; }
+      .note-yellow { left: -50px; }
+      .note-orange { right: -45px; }
+    }
     @media (max-width: 960px) {
       :root { --pad: 72px; }
-      .hero-inner { grid-template-columns: 1fr; grid-template-areas: "head" "notes" "copy"; gap: 0; }
-      .hero-postits { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 32px 0 36px; }
-      .hero-postit { max-width: none; }
-      .hero-postit .postit-label { font-size: clamp(10px, 3.3vw, 19px); inset: 10% 6% 6% 6%; line-height: 1.25; }
+      /* Hero, mobile: eyebrow > headline > note cluster > copy > stacked CTAs */
+      #hero::before { background-size: 64px 64px;
+        mask-image: radial-gradient(ellipse 90% 60% at 50% 45%, #000 30%, transparent 100%);
+        -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 45%, #000 30%, transparent 100%); }
+      .hero-stage { min-height: 0; padding: 68px 0 56px; display: block; }
+      .hero-text { max-width: none; padding: 0; }
+      .hero-head, .hero-copy { max-width: 640px; margin: 0 auto; padding: 0 20px; }
+      .hero-eyebrow { font-size: 10px; margin: 26px 0 14px; }
+      .eyebrow-tail { display: none; }
+      .hero-h1 { font-size: clamp(40px, 6.6vw, 54px); margin-bottom: 0; }
+      .hero-body { font-size: 15px; line-height: 1.65; margin: 14px auto 20px; }
+      .hero-actions { flex-direction: column; gap: 10px; max-width: 420px; margin: 0 auto; }
+      .hero-actions .btn { width: 100%; justify-content: center; padding: 14px; }
+
+      /* Cluster scales with its own width (390px reference) via container units */
+      .hero-notes { position: relative; inset: auto; width: 100%; max-width: 420px; aspect-ratio: 390 / 214; margin: 6px auto 0; container-type: inline-size; }
+      .hero-note { width: var(--m-size); height: var(--m-size); padding: 3.08cqw; font-size: 4.62cqw;
+                   box-shadow: 0 12px 20px -10px rgba(15,13,41,0.35); align-items: center; right: auto; bottom: auto; }
+      .note-yellow { --m-size: 29.74cqw; --r: -7deg; left: 4.1%;  top: 6.67cqw;  animation-delay: 0s; }
+      .note-orange { --m-size: 31.79cqw; --r: 5deg;  left: 30.3%; top: 20cqw;    animation-delay: -1.3s; }
+      .note-blue   { --m-size: 28.72cqw; --r: 4deg;  left: 60%;   top: 3.08cqw;  animation-delay: -2.6s; padding-top: 3.08cqw; }
+      .note-purple { --m-size: 30.26cqw; --r: -5deg; left: 67.2%; top: 28.72cqw; animation-delay: -3.9s; padding-top: 3.08cqw; }
       .about-grid, .advisors-inner { grid-template-columns: 1fr; gap: 48px; }
       .nav-links li:not(:last-child) { display: none; }
       .offer { padding: 40px 32px 32px; }
@@ -254,7 +298,6 @@
     @media (max-width: 600px) {
       .container, .nav-inner { padding-left: 20px; padding-right: 20px; }
       .footer-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
-      .hero-postits { gap: 8px; }
       .team-head { flex-wrap: wrap; }
       .team-link { margin-left: 0; width: 100%; }
       .offer { padding: 32px 20px 24px; border-radius: 14px; margin-top: 56px; }
@@ -280,38 +323,24 @@
 
   <!-- 1. HERO -->
   <section id="hero">
-    <div class="container">
-      <div class="hero-inner">
+    <div class="hero-stage">
+      <div class="hero-text">
         <div class="hero-head fade-up">
-          <span class="hero-eyebrow">Life Sciences Events &amp; Engagement Technology</span>
-          <h1 class="hero-h1">Are you ready to untangle your events operations?</h1>
+          <span class="hero-eyebrow">Life Sciences Events &amp; Engagement Tech<span class="eyebrow-tail">nology</span></span>
+          <h1 class="hero-h1">Are you ready to <span class="hero-accent">untangle</span> your events operations?</h1>
         </div>
-        <div class="hero-copy fade-up" style="transition-delay:0.1s">
+        <!-- The four problems we untangle: pinned around the edges on desktop, a cluster on mobile -->
+        <ul class="hero-notes fade-up" style="transition-delay:0.15s" aria-label="Common problems">
+          <li class="hero-note note-yellow">High manual effort</li>
+          <li class="hero-note note-orange">Lack of visibility &amp; insights</li>
+          <li class="hero-note note-blue">Legacy processes</li>
+          <li class="hero-note note-purple">Complex tech ecosystems</li>
+        </ul>
+        <div class="hero-copy fade-up">
           <p class="hero-body">If your life sciences events are running on a mix of manual workarounds, regional systems, and inherited processes — you're not alone. We help global pharmaceutical organisations cut through the complexity and design something that actually works.</p>
           <div class="hero-actions">
-            <a href="mailto:jenna@brightside-company.com" class="btn btn-teal">
-              Get in Touch
-            </a>
+            <a href="mailto:jenna@brightside-company.com" class="btn btn-teal">Get in Touch</a>
             <a href="#services" class="btn btn-outline">Our Services</a>
-          </div>
-        </div>
-        <!-- Post-its: the four things we untangle -->
-        <div class="hero-notes hero-postits fade-up" style="transition-delay:0.15s">
-          <div class="hero-postit postit-wrap">
-            <img src="postitYellow.png" alt="" />
-            <span class="postit-label">High manual effort</span>
-          </div>
-          <div class="hero-postit postit-wrap">
-            <img src="postitOrange.png" alt="" />
-            <span class="postit-label">Lack of visibility &amp; insights</span>
-          </div>
-          <div class="hero-postit postit-wrap">
-            <img src="postitBlue.png" alt="" />
-            <span class="postit-label">Legacy processes</span>
-          </div>
-          <div class="hero-postit postit-wrap">
-            <img src="postitPurple.png" alt="" />
-            <span class="postit-label">Complex tech ecosystems</span>
           </div>
         </div>
       </div>
